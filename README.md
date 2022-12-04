@@ -2,10 +2,11 @@
 
 ## Description
 
+A web server for a front-end application called Zoo Keepr. This will store data of the animals for animal enthusiasts to access. 
 
 ### User Story
 
-* 
+* AS an animal enthusiast I WANT an app that has a catalog SO THAT I can view and add animal information in a database. 
 
 ## Table of Contents
 
