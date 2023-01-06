@@ -7,7 +7,7 @@ const { animals } = require('./data/animals');
 // Requiring express
 const express = require('express');
 
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 // Instansitate server
 const app = express();
 // parse incoming string or array data
@@ -105,7 +105,8 @@ app.get('/api/animals/:id', (req, res) => {
 	if (result) {
 		res.json(result);
 	} else {
-		res.send(404); //error code
+		res.send(404); 
+    //error code
 	}
 });
 // Post Request
