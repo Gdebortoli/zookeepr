@@ -14,6 +14,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// JS AND CSS file middleware
+app.use(express.static('public'));
 // Query Filter
 function filterByQuery(query, animalsArray) {
 	let personalityTraitsArray = [];
@@ -125,7 +127,18 @@ app.post('/api/animals', (req, res) => {
   }
 });
 
-// Asking server to listen for requests
+// ROUTES 
+
+//Index.html route 
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/index.html'));
+});
+//Animals.html route
+
+//Zookeeper.html route
+
+
+// Asking server to listen for requests (should always be last)
 app.listen(PORT, () => {
 	console.log(`API server now on port ${PORT}!`);
 });
