@@ -1,11 +1,17 @@
+const fs = require('fs');
 // Requiring Animal Data 
 const { animals } = require('./data/animals');
 // Requiring express
 const express = require('express');
 
+
 const PORT = process.env.port || 3001; 
 // Instansitate server
 const app = express(); 
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
 // Query Filter
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -64,6 +70,13 @@ app.get('/api/animals/:id', (req, res) => {
       res.send(404); //error code
     }
   });
+// Post Request 
+app.post('/api/animals', (req, res) => {
+// req.body is where our incoming content will be
+  
+  res.json(req.body);
+  console.log(req.body);
+}); 
 
 // Asking server to listen for requests 
 app.listen(PORT, () => {
