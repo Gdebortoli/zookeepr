@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // JS AND CSS file middleware
 app.use(express.static('public'));
-// Query Filter
+// Query Filter for ANIMALS
 function filterByQuery(query, animalsArray) {
 	let personalityTraitsArray = [];
 	// Note that we save the animalsArray as filteredResults here:
@@ -65,32 +65,30 @@ function findById(id, animalsArray) {
 // Create New Animal object
 
 function createNewAnimal(body, animalsArray) {
-	const animal = body; 
-  animalsArray.push(animal);
-  fs.writeFileSync(
-    path.join(__dirname, './data/animals.json'),
-    JSON.stringify({ animals: animalsArray }, null, 2)
-  );
+	const animal = body;
+	animalsArray.push(animal);
+	fs.writeFileSync(
+		path.join(__dirname, './data/animals.json'),
+		JSON.stringify({ animals: animalsArray }, null, 2)
+	);
 	// return finished code to POST route for response
 	return animal;
 }
-
-// Validate Animal Data 
-
+// Validate Animal Data
 function validateAnimal(animal) {
-  if (!animal.name || typeof animal.name !== 'string') {
-    return false;
-  }
-  if (!animal.species || typeof animal.species !== 'string') {
-    return false;
-  }
-  if (!animal.diet || typeof animal.diet !== 'string') {
-    return false;
-  }
-  if (!animal.personalityTraits || !Array.isArray(animal.personalityTraits)) {
-    return false;
-  }
-  return true;
+	if (!animal.name || typeof animal.name !== 'string') {
+		return false;
+	}
+	if (!animal.species || typeof animal.species !== 'string') {
+		return false;
+	}
+	if (!animal.diet || typeof animal.diet !== 'string') {
+		return false;
+	}
+	if (!animal.personalityTraits || !Array.isArray(animal.personalityTraits)) {
+		return false;
+	}
+	return true;
 }
 
 // GET route to Animal Data
@@ -101,42 +99,51 @@ app.get('/api/animals', (req, res) => {
 	}
 	res.json(results);
 });
-// GET route for animals by ID
+// GET route for Animals by ID
 app.get('/api/animals/:id', (req, res) => {
 	const result = findById(req.params.id, animals);
 	if (result) {
 		res.json(result);
 	} else {
-		res.send(404); 
-    //error code
+		res.send(404);
+		//error code
 	}
 });
-// Post Request
+// POST Request for animals 
 app.post('/api/animals', (req, res) => {
 	// set id based on what the next index of the array will be
 	req.body.id = animals.length.toString();
 
-  // if any data in req.body is incorrect, send 400 error back
-  if (!validateAnimal(req.body)) {
-    res.status(400).send('The animal is not properly formatted.');
-  } else {
-	// add animal to json file and animals array in this function
-	const animal = createNewAnimal(req.body, animals);
+	// if any data in req.body is incorrect, send 400 error back
+	if (!validateAnimal(req.body)) {
+		res.status(400).send('The animal is not properly formatted.');
+	} else {
+		// add animal to json file and animals array in this function
+		const animal = createNewAnimal(req.body, animals);
 
-	res.json(animal);
-  }
+		res.json(animal);
+	}
 });
 
-// ROUTES 
+// 
 
-//Index.html route 
+// ROUTES
+//Index.html route
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, './public/index.html'));
 });
 //Animals.html route
-
+app.get('/animals', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/animals.html'));
+});
 //Zookeeper.html route
-
+app.get('/zookeepers', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+// Wildcard Route - Just in case someone tried to request a page that doesn't exist
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/index.html'));
+  });
 
 // Asking server to listen for requests (should always be last)
 app.listen(PORT, () => {

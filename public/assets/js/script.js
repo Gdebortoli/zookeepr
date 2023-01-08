@@ -26,7 +26,7 @@ const handleAnimalFormSubmit = event => {
   }
   const animalObject = { name, species, diet, personalityTraits };
 
-  // Fetch Request to POST data - Getting the form to post the animal data
+  // Fetch Request to POST data - Getting the form to post the ANIMAL data
   fetch('/api/animals', {
     method: 'POST',
     headers: {
@@ -45,6 +45,9 @@ const handleAnimalFormSubmit = event => {
       console.log(postResponse);
       alert('Thank you for adding an animal!');
     });
+
+    // Fetch Request to POST data - Getting the form to post the ZOOKEEPER data
+
 
 };
 
