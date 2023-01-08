@@ -1,8 +1,12 @@
 // Animal Routes
-// Allows us to declare routes easily 
 const router = require('express').Router();
 // Importing functions from lib
-const { filterByQuery, findById, createNewAnimal, validateAnimal } = require('../../lib/animals');
+const { 
+	filterByQuery, 
+	findById, 
+	createNewAnimal, 
+	validateAnimal 
+} = require('../../lib/animals');
 const { animals } = require('../../data/animals');
 
 // GET route to Animal Data
